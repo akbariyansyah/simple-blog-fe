@@ -2,8 +2,8 @@ import axios from "axios";
 import swal from "sweetalert";
 
 
-const loadArticle = (id,page,limit) => {
-    let baseUrl = `/article/${id}?page=${page}&limit=${limit}`
+const loadArticle = (id, page, limit, keyword = "") => {
+    let baseUrl = `/article/${id}?page=${page}&limit=${limit}&keyword=${keyword}`
     return axios.get(baseUrl)
         .then(res => {
             if (res.data.data === null) {
@@ -45,9 +45,9 @@ const saveChange = ({ title, content, id_article, user_id_article }) => {
         .catch(err => console.log(err))
 
 
-    
+
 }
-const deleteArticle = (id,page,limit) => {
+const deleteArticle = (id, page, limit) => {
     let baseUrl = `/article/${id}?page=${page}&limit=${limit}`
     if (id) {
         swal("Anda yakin ingin menghapus artikel ini ? ketik iya untuk menghapus", {

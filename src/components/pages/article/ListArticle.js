@@ -12,6 +12,7 @@ export default function ListArticle(props) {
         limit: 3
     })
     const [articles, setArticles] = useState({
+        keyword: "",
         title: "",
         content: "",
         user_id_article: 0,
@@ -19,21 +20,16 @@ export default function ListArticle(props) {
         allArticles: [],
 
     })
-    console.log(articles.title)
-    console.log(articles.content)
-    console.log(articles.user_id_article)
-    console.log(articles.id_article)
     useEffect(() => {
         // console.log(id)
-        loadArticle(id, page.offset, page.limit).then(res => {
-            setArticles({
-                ...articles,
-                allArticles: res
-            })
-        })
+        loadArticle(id, page.offset, page.limit,articles.keyword).then(res => setArticles({
+            ...articles,
+            allArticles: res
+        }))
     }, [page.offset])
 
     const handleChange = e => {
+        console.log([e.target.name], e.target.value)
         setArticles({
             ...articles,
             [e.target.name]: e.target.value
@@ -48,7 +44,7 @@ export default function ListArticle(props) {
             id_article: articles.id_article,
         }).then(res => {
             if (res.status === 202) {
-                loadArticle(id, page.offset, page.limit).then(res => setArticles({
+                loadArticle(id, page.offset, page.limit,articles.keyword).then(res => setArticles({
                     ...articles,
                     allArticles: res
                 }))
@@ -67,6 +63,12 @@ export default function ListArticle(props) {
             id_article: id_article,
             user_id_article: user_id_article
         })
+    }
+    const search = keyword => {
+        loadArticle(id, page.offset, page.limit,keyword).then(res => setArticles({
+            ...articles,
+            allArticles: res
+        }))
     }
     const prev = () => {
         setPage({
@@ -154,6 +156,17 @@ export default function ListArticle(props) {
             <div className="row">
                 <div className="col-lg-12 mb-4 border border-dark">
                     <h1>My Articles</h1>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-lg-12 mb-4 border border-dark">
+                    <h4>Search articles...</h4>
+                    <div class="input-group mb-3">
+                        <input type="text" name="keyword" onChange={handleChange} class="form-control" placeholder="Enter title article" />
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-primary" onClick={() => search(articles.keyword)} type="button" id="button-addon2">Search</button>
+                        </div>
+                    </div>
                 </div>
             </div>
             {component}
