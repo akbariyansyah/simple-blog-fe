@@ -37,3 +37,8 @@ body {
   margin-top: 20px;
   margin-left: 8%;
 }
+.pagination {
+  margin-left: 50%;
+  margin-top: 15px;
+  margin-bottom: 30px;
+}
