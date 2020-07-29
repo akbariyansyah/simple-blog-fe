@@ -2,10 +2,11 @@ import axios from "axios";
 import swal from "sweetalert";
 
 
-const loadArticle = (id, page, limit, keyword = "") => {
+const loadArticle = (id, page, limit, keyword = "%%") => {
     let baseUrl = `/article/${id}?page=${page}&limit=${limit}&keyword=${keyword}`
     return axios.get(baseUrl)
         .then(res => {
+            console.log(res)
             if (res.data.data === null) {
                 return null
             } else {

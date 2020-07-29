@@ -73,13 +73,13 @@ export default function ListArticle(props) {
     const prev = () => {
         setPage({
             ...page,
-            offset: page.offset - 1,
+            offset: page.offset - 3,
         })
     }
     const next = () => {
         setPage({
             ...page,
-            offset: page.offset + 1,
+            offset: page.offset + 3,
         })
     }
     let component
