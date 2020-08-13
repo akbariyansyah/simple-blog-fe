@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import '../../../App.css'
 import axios from 'axios'
 import Main from '../home/Main'
-import swal from 'sweetalert';
+// import swal from 'sweetalert'
 import { Redirect } from 'react-router-dom'
 
 const LoginForm = props => {
+
+    
     const [state, setState] = useState({
         email: "",
         emailMessage: "enter your email",
@@ -36,10 +38,10 @@ const LoginForm = props => {
                         isLoggedIn: state.isLoggedIn = true,
                         id: state.id = id
                     })
-                    swal("Good job!", "Login Successfull", "success");
+                    alert("Good job!", "Login Successfull", "success");
                     props.loginUser(id)
                 } else {
-                    swal("Oops...!", "Login Failed", "error");
+                    alert("Oops...!", "Login Failed", "error");
                     setState({
                         ...state,
                         nextPath: "/"

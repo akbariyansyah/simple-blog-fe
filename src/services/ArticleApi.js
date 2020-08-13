@@ -1,5 +1,5 @@
 import axios from "axios";
-import swal from "sweetalert";
+import swal from 'sweetalert'
 
 
 const loadArticle = (id, page, limit, keyword = "%%") => {
