@@ -5,40 +5,12 @@
   background-position:center;
 } */
 body {
-  background-color: #343A40;
-  color: white;
+  /* background-color: #343A40; */
+  color: black;
 
 }
 #jumbotron {
   margin-top: 40px;
   color: #343A40;
   border-radius: 20px;
-}
-.right-side {
-  height: 700px;
-  width: 1000px;
-  filter: grayscale(100%);
-  transition: all .3s ;
-  overflow: hidden;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 1);
-}
-.right-side:hover {
-  filter: grayscale(0%);
-  box-shadow: 0 10px 15px rgba(0, 0, 0, .2);
-}
-.form {
-  width: 50%;
-  margin: 100px auto;
-  box-shadow: 0 5px 5px rgba(0, 0, 0, .5);
-
-}
-.inner {
-  overflow: hidden;
-  margin-top: 20px;
-  margin-left: 8%;
-}
-.pagination {
-  margin-left: 50%;
-  margin-top: 15px;
-  margin-bottom: 30px;
 }

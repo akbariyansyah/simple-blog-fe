@@ -1,90 +1,61 @@
 import React, { useState, useEffect } from 'react';
-import '../../../App.css';
-import { saveChange, deleteArticle, loadArticle } from '../../../services/ArticleApi'
-import { Link } from 'react-router-dom'
-import EditArticleModal from './EditArticleModal'
 
+import '../../../App.css'
+
+import EditArticleModal from './EditArticleModal'
+import { loadArticle } from '../../../services/ArticleApi'
+import { Link } from 'react-router-dom'
 export default function ListArticle(props) {
 
     const [id, setId] = useState(props.id)
     const [page, setPage] = useState({
+        display: 1,
         offset: 0,
-        limit: 3
-    })
-    const [articles, setArticles] = useState({
-        keyword: "",
-        title: "",
-        content: "",
-        user_id_article: 0,
-        id_article: "",
-        allArticles: [],
-
+        limit: 3,
+        keyword: ""
     })
     useEffect(() => {
-        // console.log(id)
-        loadArticle(id, page.offset, page.limit,articles.keyword).then(res => setArticles({
-            ...articles,
-            allArticles: res
-        }))
+        loadArticle(id,page.offset,page.limit,page.keyword).then(res => props.clicked(res))
     }, [page.offset])
 
-    const handleChange = e => {
-        console.log([e.target.name], e.target.value)
-        setArticles({
-            ...articles,
-            [e.target.name]: e.target.value
-        })
-    }
-
-    const save = () => {
-        saveChange({
-            title: articles.title,
-            content: articles.content,
-            user_id_article: articles.user_id_article,
-            id_article: articles.id_article,
-        }).then(res => {
-            if (res.status === 202) {
-                loadArticle(id, page.offset, page.limit,articles.keyword).then(res => setArticles({
-                    ...articles,
-                    allArticles: res
-                }))
-            }
-        })
-
-    }
-    const deletetion = id => {
-        deleteArticle(id)
-    }
     const edit = ({ title, content, id_article, user_id_article }) => {
-        setArticles({
-            ...articles,
+        const article = {
             title: title,
             content: content,
             id_article: id_article,
             user_id_article: user_id_article
+        }
+        props.editArticle(article)
+    }
+    const handleChange = e => {
+        setPage({
+            ...page,
+            [e.target.name]: e.target.value
         })
     }
     const search = keyword => {
-        loadArticle(id, page.offset, page.limit,keyword).then(res => setArticles({
-            ...articles,
-            allArticles: res
-        }))
+        loadArticle(id,page.offset,page.limit,keyword).then(res => props.clicked(res))
     }
     const prev = () => {
         setPage({
             ...page,
             offset: page.offset - 3,
+            display: page.display - 1
         })
+        console.log(page.offset)
     }
     const next = () => {
         setPage({
             ...page,
             offset: page.offset + 3,
+            display: page.display + 1
         })
+        console.log(page.offset)
+
     }
     let component
 
-    if (articles.allArticles === null) {
+    if (props.articles === null) {
         component =
             <div className="row">
                 <div className="col-lg-12">
@@ -99,10 +70,10 @@ export default function ListArticle(props) {
     } else {
         component =
             <div className="row">
-                {articles.allArticles.map(article =>
-                    <div className="col-lg-12">
+                {props.articles.map(article =>
+                    <diV className="col-lg-12">
                         <h1 style={{ marginTop: 20 }}>{article.title_article}</h1>
-                        <p style={{ textAlign: "justify" }}>{article.content_article.substring(0, 20)}...</p>
+                        <p>{article.content_article.substring(1, 50)}...</p>
                         <p>posted : <span>{article.created_at}</span> </p>
                         <Link to={{
                             pathname: `/article/${article.user_id_article}/myarticles/${article.id_article}`
@@ -121,35 +92,35 @@ export default function ListArticle(props) {
                             })
                             }>Read more</button>
                         </Link>
-                        <button type="submit" style={{ marginRight: 10 }} className="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal" onClick={() => edit({
+                        <button type="submit" style={{ marginRight: 10 }} className="btn btn-outline-warning" data-toggle="modal" data-target="#exampleModal" onClick={() => edit({
                             title: article.title_article,
                             content: article.content_article,
                             id_article: article.id_article,
                             user_id_article: article.user_id_article
                         })}>edit</button>
                         <button type="submit" className="btn btn-outline-danger"
-                            onClick={() => deletetion(article.id_article)}>
+                            onClick={() => props.deleteArticle(article.id_article)}>
                             delete
                         </button>
-                    </div>
+                    </diV>
                 )}
                 <EditArticleModal
-                    title={articles.title}
-                    content={articles.content}
-                    handleChange={handleChange}
-                    saveChange={save} />
+                    title={props.title}
+                    content={props.content}
+                    handleChange={props.handleChange}
+                    saveChange={props.saveChange} />
             </div>
     }
     let buttonPrev, buttonNext
     if (page.offset < 1) {
         buttonPrev = <button className="btn btn-outline-info" disabled>...</button>
     } else {
-        buttonPrev = <button className="btn btn-outline-info" onClick={prev}>{page.offset}</button>
+        buttonPrev = <button className="btn btn-outline-info" onClick={prev}>{page.display - 1}</button>
     }
-    if (articles.allArticles.length < 3) {
+    if (props.articles.length < 3) {
         buttonNext = <button className="btn btn-outline-info" disabled>...</button>
     } else {
-        buttonNext = <button className="btn btn-outline-info" onClick={next}>{page.offset + 2}</button>
+        buttonNext = <button className="btn btn-outline-info" onClick={next}>{page.display + 1}</button>
     }
     return (
         <div className="container" id="list-article">
@@ -164,18 +135,17 @@ export default function ListArticle(props) {
                     <div class="input-group mb-3">
                         <input type="text" name="keyword" onChange={handleChange} class="form-control" placeholder="Enter title article" />
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary" onClick={() => search(articles.keyword)} type="button" id="button-addon2">Search</button>
+                            <button class="btn btn-outline-primary" onClick={() => search(page.keyword)} type="button" id="button-addon2">Search</button>
                         </div>
                     </div>
                 </div>
             </div>
             {component}
-            <div className="pagination">
+            <div className="pagination mb-3 mt-4">
                 {buttonPrev}
-                <button className="btn btn-primary">{page.offset + 1}</button>
+                <button className="btn btn-primary">{page.display}</button>
                 {buttonNext}
             </div>
-
         </div>
     )
 }

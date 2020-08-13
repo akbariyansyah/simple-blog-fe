@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import '../../../App.css'
+import '../../../assets/css/login-form.css'
 import axios from 'axios'
 import Main from '../home/Main'
-// import swal from 'sweetalert'
-import { Redirect } from 'react-router-dom'
-
+import swal from 'sweetalert';
+import user_profile from '../../../assets/profile-user.svg'
+import { Redirect, Link } from 'react-router-dom'
+import welcome from '../../../assets/welcome.jpg'
 const LoginForm = props => {
-
-    
     const [state, setState] = useState({
         email: "",
         emailMessage: "enter your email",
         password: "",
-        passwordMessage: "enter your password",
+        passwordMessage: "minimal 3 character",
         responseCode: 0,
         nextPath: "",
         id: 0,
@@ -27,21 +26,23 @@ const LoginForm = props => {
         }
         axios.post('/login', user)
             .then(res => {
-                console.log(res.data.user.id)
+                console.log(res.data.status)
                 if (res.data.status === 200) {
-                    let id = res.data.user.id
-                    console.log(id)
+                    let user_id = res.data.user.id
+                    console.log(user_id)
                     setState({
                         ...state,
                         responseCode: state.responseCode = res.data.status,
-                        nextPath: state.nextPath = `/article/${id}`,
+                        nextPath: state.nextPath = `/article/${user_id}`,
                         isLoggedIn: state.isLoggedIn = true,
-                        id: state.id = id
+                        id: user_id
                     })
-                    alert("Good job!", "Login Successfull", "success");
-                    props.loginUser(id)
+                    swal("Good job!", "Login Successfull", "success");
+                    console.log(state.id)
+                    console.log(state.nextPath)
+                    props.loginUser(user_id)
                 } else {
-                    alert("Oops...!", "Login Failed", "error");
+                    swal("Oops...!", "Login Failed", "error");
                     setState({
                         ...state,
                         nextPath: "/"
@@ -56,40 +57,53 @@ const LoginForm = props => {
     }
     let button
     (state.email === "" || state.password === "")
-        ? button = <button type="submit" className="btn btn-secondary" disabled>Login</button>
-        : button = <button type="submit" className="btn btn-primary" onClick={login}>Login</button>
+        ? button = <button type="submit" className="btn-login-disabled" disabled>LOGIN</button>
+        : button = <button type="submit" className="btn-login" onClick={login}>LOGIN</button>
 
     if (state.responseCode === 200 && state.isLoggedIn === true) {
         console.log("berhasil login")
         return <Redirect to={state.nextPath} Component={() => <Main id={state.id} />} />
     }
     return (
-        <div className="row" style={{ color: "black" }}>
-            <div className="inner">
-                <div className="col-lg-12 right-side">
-                    <div className="form">
-                        <div className="card">
-                            <div className="card-body">
-                                <div className="card=title">
-                                    <h2><i style={{ paddingRight: '20px' }} class="fa fa-sign-in" aria-hidden="true"></i>Login Now</h2>
-                                </div>
-                                <form>
-                                    <div claclassNamess="form-group">
-                                        <label for="email">Email address</label>
-                                        <input type="email" name="email" class="form-control" onChange={e => setState({ ...state, email: e.target.value })} placeholder="Enter email" />
-                                        <small className="form-text text-muted">{state.emailMessage}</small>
-                                    </div>
-                                    <div className="form-group">
-                                        <label for="password">Password</label>
-                                        <input type="password" name="password" className="form-control" onChange={e => setState({ ...state, password: e.target.value })} placeholder="Password" />
-                                        <small className="form-text text-muted">{state.passwordMessage}</small>
+        <div className="row login-page" style={{ color: "black" }}>
 
-                                    </div>
-                                    {button}
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+            <div className="col-lg-8 d-none d-lg-block image-container">
+                <div>
+                    <p>Welcome to the simple blog</p>
+                    <img className="image" src={welcome}></img>
+                </div>
+            </div>
+            <div className="col-lg-4 login-form-user">
+                <div className="form">
+                    <table className="form-table">
+                        <tr>
+                            <td><img src={user_profile} /> </td>
+                        </tr>
+                        <tr>
+                            <td> <h2>Login Now</h2></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="email" name="email" class="form-input" onChange={e => setState({ ...state, email: e.target.value })} placeholder="Enter email" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="password" name="password" className="form-input" onChange={e => setState({ ...state, password: e.target.value })} placeholder="Password" />
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{button}</td>
+                        </tr>
+                        <tr>
+                            <td><b>New User ? </b>
+                                <Link to="/register">
+                                    <span>Sign Up</span>
+                                </Link>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>

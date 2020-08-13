@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import '../../../App.css'
-import { createArticle } from '../../../services/ArticleApi'
 
 export default function CreateArticle(props) {
     const [state, setState] = useState({
@@ -8,13 +7,13 @@ export default function CreateArticle(props) {
         article_content: "",
         id: props.id
     })
-    const newArticle = (event) => {
+    const createArticle = (event) => {
         event.preventDefault()
         const article = {
             title_article: state.article_title,
             content_article: state.article_content
         }
-        createArticle(state.id, article)
+        props.createArticle(state.id, article)
         setState({
             ...state,
             article_title: "",
@@ -26,7 +25,7 @@ export default function CreateArticle(props) {
     if (state.article_title === "" || state.article_content === "") {
         button = <button className="btn btn-secondary btn-lg" type="submit" disabled>Create</button>
     } else {
-        button = <button className="btn btn-primary btn-lg" type="submit" onClick={newArticle}>Create</button>
+        button = <button className="btn btn-primary btn-lg" type="submit" onClick={createArticle}>Create</button>
     }
     return (
         <div className="container">
@@ -45,7 +44,7 @@ export default function CreateArticle(props) {
 
                         <div class="form-group">
                             <label for="article-content">Article Content</label>
-                            <textarea class="form-control" name="article_content" onChange={e => setState({...state, article_content : e.target.value})} rows="8"></textarea>
+                            <textarea class="form-control" name="article_content" onChange={e => setState({...state, article_content : e.target.value})} rows="5"></textarea>
                         </div>
                         {button}
                     </form>
