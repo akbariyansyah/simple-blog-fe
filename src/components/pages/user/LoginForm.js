@@ -5,7 +5,7 @@ import Main from '../home/Main'
 import swal from 'sweetalert';
 import user_profile from '../../../assets/profile-user.svg'
 import { Redirect, Link } from 'react-router-dom'
-import welcome from '../../../assets/welcome.jpg'
+import welcome from '../../../assets/images/welcome.jpg'
 const LoginForm = props => {
     const [state, setState] = useState({
         email: "",
