@@ -8,10 +8,6 @@ import { Redirect, Link } from 'react-router-dom'
 import welcome from '../../../assets/images/welcome.jpg'
 const LoginForm = props => {
     const [state, setState] = useState({
-        email: "",
-        emailMessage: "enter your email",
-        password: "",
-        passwordMessage: "minimal 3 character",
         responseCode: 0,
         nextPath: "",
         id: 0,
@@ -21,8 +17,8 @@ const LoginForm = props => {
     const login = (e) => {
         e.preventDefault()
         const user = {
-            email: state.email,
-            password: state.password
+            email: props.email,
+            password: props.password
         }
         axios.post('/login', user)
             .then(res => {
@@ -56,7 +52,7 @@ const LoginForm = props => {
 
     }
     let button
-    (state.email === "" || state.password === "")
+    (props.email === "" || props.password === "")
         ? button = <button type="submit" className="btn-login-disabled" disabled>LOGIN</button>
         : button = <button type="submit" className="btn-login" onClick={login}>LOGIN</button>
 
@@ -84,13 +80,12 @@ const LoginForm = props => {
                         </tr>
                         <tr>
                             <td>
-                                <input type="email" name="email" class="form-input" onChange={e => setState({ ...state, email: e.target.value })} placeholder="Enter email" />
+                                <input type="email" autocomplete="off" name="email" class="form-input" onChange={props.handleChangeUser} placeholder="Enter email" />
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <input type="password" name="password" className="form-input" onChange={e => setState({ ...state, password: e.target.value })} placeholder="Password" />
-
+                                <input type="password" name="password" className="form-input" onChange={props.handleChangeUser} placeholder="Password" />
                             </td>
                         </tr>
                         <tr>

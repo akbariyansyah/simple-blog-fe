@@ -1,6 +1,8 @@
 import { saveChange, deleteArticle, loadArticle,createArticle } from '../../services/ArticleApi'
 const initialState = {
     user: {
+        email :"",
+        password:"",
         id: 0
     },
     title: "",
@@ -10,6 +12,8 @@ const initialState = {
     articles: []
 }
 const reducer = (state = initialState, action) => {
+    console.log(state.user.email)
+    console.log(state.user.password)
     switch (action.type) {
         case "GETARTICLES":
             return { ...state, articles: action.data };
@@ -26,6 +30,14 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 [action.data.name]: action.data.value
             }
+            case "HANDLECHANGEUSER":
+                return {
+                    ...state,
+                    user : {
+                        ...state.user,
+                        [action.data.name]: action.data.value
+                    }
+                }
         case "SAVECHANGE":
             saveChange({
                 title: state.title,

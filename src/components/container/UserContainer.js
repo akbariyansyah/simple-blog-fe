@@ -5,18 +5,27 @@ class UserContainer extends Component {
     render() {
         return (
             <div>
-                <LoginForm loginUser={this.props.login}/>
+                <LoginForm 
+                loginUser={this.props.login}
+                email={this.props.email}
+                password={this.props.password}
+                handleChangeUser={this.props.handleChangeUser}
+                />
             </div>
         )
     }
 }
 const mapStateToProps = (state) => {
-    return {  }
+    return { 
+        email : state.user.email,
+        password : state.user.password
+    }   
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        login : id => dispatch({type : "LOGIN",data : id})
+        login : id => dispatch({type : "LOGIN",data : id}),
+        handleChangeUser : e => dispatch({type : "HANDLECHANGEUSER",data : { name : [e.target.name], value: e.target.value}})
     }
 }
 

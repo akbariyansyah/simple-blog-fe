@@ -7,7 +7,7 @@ import { loadArticle } from '../../../services/ArticleApi'
 import { Link } from 'react-router-dom'
 export default function ListArticle(props) {
 
-    const [id, setId] = useState(props.id)
+    const [id] = useState(props.id)
     const [page, setPage] = useState({
         display: 1,
         offset: 0,

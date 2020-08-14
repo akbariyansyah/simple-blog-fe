@@ -31,12 +31,13 @@
     border: none;
     outline: none;
     border-bottom: 2px solid #3c2946;
+    transition: all .3s;
   }
   .form-input:focus {
     width: 80%;
     border: none;
     outline: none;
-    border-bottom: 2px solid #3c2946;
+    border-bottom: 2px solid black;
   }
   .btn-login {
     color: white;
