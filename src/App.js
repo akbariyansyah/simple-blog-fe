@@ -1,5 +1,5 @@
 import React from 'react';
-import Master from './components/Master'
+import Master from './routes/Master'
 import './App.css';
 import { Provider } from 'react-redux'
 import { store } from './redux/store-config/store';

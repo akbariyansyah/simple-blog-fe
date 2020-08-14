@@ -1,10 +1,10 @@
 import React from 'react';
-import Nav from './Nav'
+import Nav from '../components/pages/home/Nav'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import Header from './Header';
-import ListArticleContainer from '../../container/ListArticleContainer';
-import CreateArticleContainer from '../../container/CreateArticleContainer';
-import DetailArticle from '../article/DetailArticle'
+import Header from '../components/pages/home/Header';
+import ListArticleContainer from '../components/container/ListArticleContainer';
+import CreateArticleContainer from '../components/container/CreateArticleContainer';
+import DetailArticle from '../components/pages/article/DetailArticle'
 function Main(match) {
     return (
             <div className="container">

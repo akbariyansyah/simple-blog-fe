@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../../assets/css/login-form.css'
 import axios from 'axios'
-import Main from '../home/Main'
+import Main from '../../../routes/Main'
 import swal from 'sweetalert';
 import {loginUser} from '../../../services/UserApi'
 import user_profile from '../../../assets/profile-user.svg'
