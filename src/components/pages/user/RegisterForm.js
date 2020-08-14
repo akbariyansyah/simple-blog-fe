@@ -1,8 +1,12 @@
-import React from 'react';
-// import swal from 'sweetalert'
-import '../../../App.css'
-// import RegisterUser from '../../../services/RegisterService'
+import React, { useState } from 'react';
+import '../../../assets/css/login-form.css'
 import axios from 'axios'
+import Main from '../home/Main'
+import swal from 'sweetalert';
+import {loginUser} from '../../../services/UserApi'
+import user_profile from '../../../assets/profile-user.svg'
+import { Redirect, Link } from 'react-router-dom'
+import welcome from '../../../assets/images/register-image.jpg'
 
 
 class Register extends React.Component {
@@ -65,49 +69,60 @@ class Register extends React.Component {
         }
 
     }
+   
     render() {
+        let button
+        (this.state.email === "" || this.state.password === "")
+            ? button = <button type="submit" className="btn-login-disabled" disabled>REGISTER</button>
+            : button = <button type="submit" className="btn-login" onClick={this.register}>REGISTER</button>
+    
         return (
-            <div>
-                <div className="row">
-                    <div className="inner">
-                        <div className="col-lg-12 right-side">
-                            <div className="form">
-                                <div className="card">
-                                    <div className="card-body">
-                                        <div className="card=title">
-                                            <h2><i style={{ paddingRight: '20px' }} class="fa fa-sign-in" aria-hidden="true"></i>Register Now</h2>
-                                        </div>
-                                        <form>
-                                            <div claclassNamess="form-group">
-                                                <label for="exampleInputUsername">Username</label>
-                                                <input type="text" name="username" autocomplete="off" class="form-control" onChange={this.handleInputChange} placeholder="Enter username" />
-                                            </div>
-                                            <div claclassNamess="form-group">
-                                                <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" name="email" autocomplete="off" class="form-control" onChange={this.handleInputChange} placeholder="Enter email" />
-                                                <small className="form-text text-muted">{this.state.emailMessage}</small>
-                                            </div>
-                                            <div className="form-group">
-                                                <label for="exampleInputPassword1">Password</label>
-                                                <input type="password" name="password" className="form-control" onChange={this.handleInputChange} placeholder="Password" />
-                                                <small className="form-text text-muted">{this.state.passwordMessage}</small>
+            <div className="row login-page" style={{ color: "black" }}>
 
-                                            </div>
-                                            <button type="submit" className="btn btn-primary" onClick={this.register}>register</button>
-                                        </form>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <ul>
-                        {this.state.users.map(user => <li>{`username : ${user.username}, email : ${user.email}`}</li>)}
-                    </ul>
+            <div className="col-lg-8 d-none d-lg-block image-container">
+                <div>
+                    <p>Welcome to the simple blog</p>
+                    <img className="image" src={welcome}></img>
                 </div>
             </div>
+            <div className="col-lg-4 login-form-user">
+                <div className="form">
+                    <table className="form-table">
+                        <tr>
+                            <td><img src={user_profile} /> </td>
+                        </tr>
+                        <tr>
+                            <td> <h2>Register Now</h2></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="username" autocomplete="off" name="username" class="form-input" onChange={this.handleInputChange}  placeholder="Enter username" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="email" autocomplete="off" name="email" class="form-input" onChange={this.handleInputChange}  placeholder="Enter email" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="password" name="password" className="form-input" onChange={this.handleInputChange}  placeholder="Password" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{button}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Already have an account ? </b><br></br>
+                                <Link to="/login">
+                                    <span>Sign In</span>
+                                </Link>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
         )
     }
 }

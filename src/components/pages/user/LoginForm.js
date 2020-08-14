@@ -6,7 +6,7 @@ import swal from 'sweetalert';
 import {loginUser} from '../../../services/UserApi'
 import user_profile from '../../../assets/profile-user.svg'
 import { Redirect, Link } from 'react-router-dom'
-import welcome from '../../../assets/images/welcome.jpg'
+import welcome from '../../../assets/images/login-image.jpg'
 const LoginForm = props => {
     const [state, setState] = useState({
         responseCode: 0,
