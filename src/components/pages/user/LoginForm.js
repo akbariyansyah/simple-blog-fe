@@ -3,6 +3,7 @@ import '../../../assets/css/login-form.css'
 import axios from 'axios'
 import Main from '../home/Main'
 import swal from 'sweetalert';
+import {loginUser} from '../../../services/UserApi'
 import user_profile from '../../../assets/profile-user.svg'
 import { Redirect, Link } from 'react-router-dom'
 import welcome from '../../../assets/images/welcome.jpg'
@@ -20,35 +21,28 @@ const LoginForm = props => {
             email: props.email,
             password: props.password
         }
-        axios.post('/login', user)
-            .then(res => {
-                console.log(res.data.status)
-                if (res.data.status === 200) {
-                    let user_id = res.data.user.id
-                    console.log(user_id)
-                    setState({
-                        ...state,
-                        responseCode: state.responseCode = res.data.status,
-                        nextPath: state.nextPath = `/article/${user_id}`,
-                        isLoggedIn: state.isLoggedIn = true,
-                        id: user_id
-                    })
-                    swal("Good job!", "Login Successfull", "success");
-                    console.log(state.id)
-                    console.log(state.nextPath)
-                    props.loginUser(user_id)
-                } else {
-                    swal("Oops...!", "Login Failed", "error");
-                    setState({
-                        ...state,
-                        nextPath: "/"
-                    })
-                }
-
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        loginUser(user).then(res => {
+            console.log(res)
+            if (res.data.status === 200) {
+            let user_id = res.data.user.id
+                setState({
+                    ...state,
+                    responseCode: state.responseCode = res.data.status,
+                    nextPath: state.nextPath = `/article/${user_id}`,
+                    isLoggedIn: state.isLoggedIn = true,
+                    id: user_id
+                })
+                props.loginUser(user_id)
+                swal("Good job!", "Login Successfull", "success")
+            } else {
+                setState({
+                    ...state,
+                    nextPath: "/"
+                })
+                swal("Oops...!", "Login Failed", "error");
+            }
+        })
+       
 
     }
     let button
