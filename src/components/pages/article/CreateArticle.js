@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import '../../../App.css'
-
 export default function CreateArticle(props) {
     const [state, setState] = useState({
         article_title: "",

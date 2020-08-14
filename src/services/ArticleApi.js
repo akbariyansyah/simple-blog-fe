@@ -16,16 +16,8 @@ const loadArticle = (id, page, limit, keyword = "%%")=> {
 
 }
 const createArticle = (id, article) => {
-    axios.post(`/article/${id}`, article)
-        .then(res => {
-            console.log(res)
-            const response = res.data.code
-            if (response === 200) {
-                swal("Good job!", "Create new article success !", "success");
-            } else {
-                swal("Oops...!", "Create new article failed !", "error");
-            }
-        })
+    return axios.post(`/article/${id}`, article)
+        .then(res => res)
         .catch(function (error) {
             console.log(error);
         });

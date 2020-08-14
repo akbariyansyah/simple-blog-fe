@@ -1,4 +1,6 @@
 import { saveChange, deleteArticle, loadArticle,createArticle } from '../../services/ArticleApi'
+import {createArticleSuccess, createArticleFail} from '../../utils/Alert'
+
 const initialState = {
     user: {
         email :"",
@@ -62,7 +64,13 @@ const reducer = (state = initialState, action) => {
                 }
             })
         case "CREATEARTICLE":
-            createArticle(action.data.id,action.data.article)
+            createArticle(action.data.id,action.data.article).then(res => {
+                if (res.data.code === 200) {
+                    createArticleSuccess()
+                } else {
+                    createArticleFail()
+                }
+            })
         default:
             return state
        
