@@ -14,8 +14,7 @@ const initialState = {
     articles: []
 }
 const reducer = (state = initialState, action) => {
-    console.log(state.user.email)
-    console.log(state.user.password)
+  
     switch (action.type) {
         case "GETARTICLES":
             return { ...state, articles: action.data };
@@ -50,6 +49,7 @@ const reducer = (state = initialState, action) => {
         case "DELETEARTICLE":
             deleteArticle(action.data)
         case "LOGIN":
+
             return {
                 ...state,
                 user: {

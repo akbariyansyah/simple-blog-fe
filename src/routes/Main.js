@@ -7,7 +7,7 @@ import CreateArticleContainer from '../components/container/CreateArticleContain
 import DetailArticle from '../components/pages/article/DetailArticle'
 function Main(match) {
     return (
-            <div className="container">
+            <div>
                 <Router>
                 <Nav id={match.match.params.id} />
                     <Switch>

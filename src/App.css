@@ -10,7 +10,10 @@ body {
 
 }
 #jumbotron {
-  margin-top: 40px;
+  background: url(../src/assets/images/typewriter.svg);
+  background-size: 700px;
+  background-repeat: no-repeat;
+  background-position: right;
   color: #343A40;
-  border-radius: 20px;
+  height: 560px;
 }
