@@ -5,7 +5,7 @@ function Nav(match) {
     return (
         <div className="container">
         <nav class="navbar mt-3 mb-1 navbar-expand-lg navbar-light bg-light">
-            <p class="navbar-brand"><i class="fa fa-newspaper-o" aria-hidden="true"></i> Simple Blog </p>
+            <p class="navbar-brand" style={{borderBottom:"2px solid black"}}><i class="fa fa-newspaper-o" aria-hidden="true"></i> Simple Blog </p>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
